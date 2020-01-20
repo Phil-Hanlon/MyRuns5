@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/date"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Date"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="dateClicked"
+        />
+
+    <TextView
+        android:id="@+id/time"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Time"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="timeClicked"
+        />
+
+    <TextView
+        android:id="@+id/duration"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Duration"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="durationClicked"
+        />
+
+    <TextView
+        android:id="@+id/distance"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Distance"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="distanceClicked"
+        />
+
+    <TextView
+        android:id="@+id/calories"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Calories"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="caloriesClicked"
+        />
+
+    <TextView
+        android:id="@+id/heart_rate"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Heart Rate"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="heartRateClicked"
+        />
+
+    <TextView
+        android:id="@+id/comment"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Comment"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+
+        android:onClick="commentClicked"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="SAVE"
+
+            android:onClick="saveClicked"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="CANCEL"
+
+            android:onClick="cancelClicked"/>
+
+    </LinearLayout>
+
+</LinearLayout>
