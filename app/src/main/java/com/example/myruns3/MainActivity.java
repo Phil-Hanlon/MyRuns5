@@ -1,16 +1,11 @@
-package com.example.myruns2;
+package com.example.myruns3;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -28,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -37,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentArrayList = new ArrayList<Fragment>();
         fragmentArrayList.add(new StartFragment());
-        fragmentArrayList.add(new HistoryFragment());
+        fragmentArrayList.add(new HistoryFragment(this));
         fragmentArrayList.add(new SettingsFragment());
 
         pagerAdapter = new ImpFragmentPagerAdapter(getSupportFragmentManager(), fragmentArrayList);

@@ -1,4 +1,4 @@
-package com.example.myruns2;
+package com.example.myruns3;
 
 
 import android.app.DatePickerDialog;
@@ -10,9 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -21,11 +18,14 @@ import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment {
 
 
-    public DatePickerFragment() {
-        // Required empty public constructor
+    private DatePickerDialog.OnDateSetListener listener;
+
+    public DatePickerFragment(DatePickerDialog.OnDateSetListener listener) {
+
+        this.listener = listener;
     }
 
 
@@ -39,12 +39,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
-    }
-
-    public void onDateSet(DatePicker view, int year, int month, int day ) {
-
-        // Use the date that the user provides
-        // Nothing for now!
+        return new DatePickerDialog(getActivity(), listener, year, month, day);
     }
 }

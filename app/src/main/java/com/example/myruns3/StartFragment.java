@@ -1,4 +1,4 @@
-package com.example.myruns2;
+package com.example.myruns3;
 
 
 import android.content.Intent;
@@ -56,6 +56,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
         spinner.setAdapter(spinnerAdapter);
     }
+
 
 
     public void onClick(View view) {

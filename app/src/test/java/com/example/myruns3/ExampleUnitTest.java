@@ -1,4 +1,4 @@
-package com.example.myruns2;
+package com.example.myruns3;
 
 import org.junit.Test;
 

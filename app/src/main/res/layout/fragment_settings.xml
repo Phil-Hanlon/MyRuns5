@@ -17,11 +17,13 @@
 
 
     <TextView
+        android:id="@+id/user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
 
         android:text="Name, Email, Class, etc\nUser Profile"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,6 +61,8 @@
         android:textColor="#009688"/>
 
     <TextView
+        android:id="@+id/unit_preference"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -67,6 +71,8 @@
 
 
     <TextView
+        android:id="@+id/comments"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -85,6 +91,8 @@
 
 
     <TextView
+        android:id="@+id/webpage"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

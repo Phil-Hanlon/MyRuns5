@@ -1,4 +1,4 @@
-package com.example.myruns2;
+package com.example.myruns3;
 
 
 import android.app.Dialog;
@@ -10,23 +10,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TimePicker;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+public class TimePickerFragment extends DialogFragment {
 
 
-    public TimePickerFragment() {
-        // Required empty public constructor
+    TimePickerDialog.OnTimeSetListener listener;
+
+
+    public TimePickerFragment(TimePickerDialog.OnTimeSetListener listener) {
+
+        this.listener = listener;
     }
 
 
@@ -38,12 +38,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         int hour = calendar.HOUR_OF_DAY;
         int minute = calendar.MINUTE;
 
-        return new TimePickerDialog(getActivity(), this, hour, minute, true);
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-        // Use the hour and minute picked by the user
+        return new TimePickerDialog(getActivity(), listener, hour, minute, true);
     }
 }
