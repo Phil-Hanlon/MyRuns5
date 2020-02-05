@@ -67,6 +67,13 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
                 Intent intent = new Intent(getActivity(), Start.class);
 
+                Spinner input_type = getView().findViewById(R.id.input_type_spinner);
+                Spinner activity_type = getView().findViewById(R.id.activity_type_spinner);
+
+                intent.putExtra("input_type", input_type.getSelectedItem().toString());
+                intent.putExtra("activity_type", activity_type.getSelectedItem().toString());
+
+                // Starts the "Start" activity with the input-type and the activity-type known
                 startActivity(intent);
 
                 break;

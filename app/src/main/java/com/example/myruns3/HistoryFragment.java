@@ -2,6 +2,7 @@ package com.example.myruns3;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,9 +14,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,22 +29,19 @@ import java.util.ArrayList;
 public class HistoryFragment extends Fragment {
 
 
-    private ArrayList<Integer> arrayList;
-    private ArrayAdapter<Integer> arrayAdapter;
+    private ArrayList<String> entries;
+    private ArrayAdapter<String> arrayAdapter;
 
-    private ImpSQLiteOpenHelper impSQLiteOpenHelper;
-    private SQLiteDatabase database;
+    private HistoryData historyData;
 
     public HistoryFragment(Context context) {
         // Required empty public constructor
 
-        impSQLiteOpenHelper = new ImpSQLiteOpenHelper(context);
-        database = impSQLiteOpenHelper.getWritableDatabase();
+        historyData = new HistoryData(context);
 
+        entries = historyData.get_all_as_strings();
 
-        arrayList = get_entries_from_database();
-
-        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, arrayList);
+        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, entries);
     }
 
 
@@ -62,6 +62,22 @@ public class HistoryFragment extends Fragment {
         listView.setAdapter(arrayAdapter);
 
 
+        // Starts the new activity when one of the entries gets clicked
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView textView = (TextView)view;
+
+                Intent intent = new Intent(getActivity(), HistoryItemActivity.class);
+
+                intent.putExtra("entry_string", (textView.getText()));
+
+                startActivityForResult(intent, 0);
+            }
+        });
+
+
         // Generate update-button
         Button updateButton = view.findViewById(R.id.update_button);
 
@@ -70,8 +86,8 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                arrayList.clear();
-                arrayList.addAll( get_entries_from_database() );
+                entries.clear();
+                entries.addAll( historyData.get_all_as_strings() );
                 arrayAdapter.notifyDataSetChanged();
             }
         });
@@ -84,48 +100,24 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                clear_database();
+                // Deletes the data from the database
+                historyData.clear();
+
+                // Empty view's arraylist
+                entries.clear();
+                arrayAdapter.notifyDataSetChanged();
             }
         });
     }
 
 
-    private ArrayList<Integer> get_entries_from_database() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        ArrayList<Integer> entries = new ArrayList<>();
-
-        Cursor cursor = database.query(
-                ImpSQLiteOpenHelper.TABLE_HISTORY,
-                null,
-                null, null, null, null, null
-        );
-
-        if( cursor.moveToFirst() ) {
-
-            while( !cursor.isAfterLast() ) {
-
-                Integer calories = cursor.getInt(0);
-
-                entries.add(calories);
-
-                cursor.moveToNext();
-            }
-        }
-
-
-        cursor.close();
-
-        return entries;
-    }
-
-
-    private void clear_database() {
-
-        // Empty table in database
-        database.execSQL("delete from " + ImpSQLiteOpenHelper.TABLE_HISTORY);
-
-        // Empty view's arraylist
-        arrayList.clear();
+        // Updates the list in case the viewed run was deleted
+        entries.clear();
+        entries.addAll( historyData.get_all_as_strings() );
         arrayAdapter.notifyDataSetChanged();
     }
 }

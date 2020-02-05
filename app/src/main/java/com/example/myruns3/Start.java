@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class Start extends AppCompatActivity {
 
@@ -47,8 +50,19 @@ public class Start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        date = new int[3];
-        time = new int[2];
+        Calendar calendar = Calendar.getInstance();
+
+        // Initializes the date and time to today
+        date = new int[] {
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        };
+
+        time = new int[] {
+                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE)
+        };
 
         setContentView(R.layout.activity_start);
 
@@ -196,12 +210,33 @@ public class Start extends AppCompatActivity {
     public void saveClicked(View view) {
 
         // Make the entry in history!
-        historyData.open();
 
-        historyData.insert(calories);
+        Intent intent = getIntent();
 
-        historyData.close();
+        String input_type = getIntent().getStringExtra("input_type");
+        String activity_type = getIntent().getStringExtra("activity_type");
 
+        Entry entry = new Entry(input_type, activity_type, duration, distance, calories, heart_rate, comment, date, time);
+
+        historyData.insert(entry);
+
+
+
+        // Create the toast to display
+        final Calendar calendar = Calendar.getInstance();
+
+        String id =
+                "" +
+                calendar.get(Calendar.DAY_OF_MONTH)
+                + calendar.get(Calendar.MONTH)
+                + calendar.get(Calendar.YEAR)
+                + calendar.get(Calendar.MINUTE)
+                + calendar.get(Calendar.HOUR);
+
+        Toast.makeText(
+                this,
+                "Entry made. (id: " + id + ")",
+                Toast.LENGTH_SHORT).show();
 
         finish();
     }
