@@ -1,10 +1,8 @@
-package com.example.myruns3;
+package com.example.myruns4;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

@@ -1,4 +1,4 @@
-package com.example.myruns3;
+package com.example.myruns4;
 
 
 import android.content.Intent;
@@ -65,16 +65,26 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
             case R.id.start_button:
 
-                Intent intent = new Intent(getActivity(), Start.class);
+                Spinner input_type_spinner = getView().findViewById(R.id.input_type_spinner);
+                String input_type = input_type_spinner.getSelectedItem().toString();
 
-                Spinner input_type = getView().findViewById(R.id.input_type_spinner);
-                Spinner activity_type = getView().findViewById(R.id.activity_type_spinner);
+                Spinner activity_type_spinner = getView().findViewById(R.id.activity_type_spinner);
+                String activity_type = activity_type_spinner.getSelectedItem().toString();
 
-                intent.putExtra("input_type", input_type.getSelectedItem().toString());
-                intent.putExtra("activity_type", activity_type.getSelectedItem().toString());
 
-                // Starts the "Start" activity with the input-type and the activity-type known
-                startActivity(intent);
+                if( input_type == "Manual Entry") {
+
+                    Intent intent = new Intent(getActivity(), Start.class);
+
+                    intent.putExtra("input_type", input_type);
+                    intent.putExtra("activity_type", activity_type);
+
+                    // Starts the "Start" activity with the input-type and the activity-type known
+                    startActivity(intent);
+                }
+                else {
+
+                }
 
                 break;
 
