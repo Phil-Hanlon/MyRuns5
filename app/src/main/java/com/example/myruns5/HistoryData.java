@@ -1,9 +1,11 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,25 @@ public class HistoryData {
         values.put(ImpSQLiteOpenHelper.COLUMN_TIME, entry.time);
 
         database.insert(ImpSQLiteOpenHelper.TABLE_HISTORY, null, values);
+
+        close();
+    }
+
+
+
+    public void insert(GPSEntry entry) {
+
+        open();
+
+        ContentValues values = new ContentValues();
+
+        values.put(ImpSQLiteOpenHelper.COLUMN_GPS_DURATION, entry.getDuration());
+        values.put(ImpSQLiteOpenHelper.COLUMN_START_LAT, entry.getStartMarkerCoords()[0]);
+        values.put(ImpSQLiteOpenHelper.COLUMN_START_LNG, entry.getStartMarkerCoords()[1]);
+        values.put(ImpSQLiteOpenHelper.COLUMN_CURRENT_LAT, entry.getCurrentMarkerCoords()[0]);
+        values.put(ImpSQLiteOpenHelper.COLUMN_CURRENT_LNG, entry.getCurrentMarkerCoords()[1]);
+
+        database.insert(ImpSQLiteOpenHelper.TABLE_GPS, null, values);
 
         close();
     }
@@ -100,14 +121,70 @@ public class HistoryData {
     }
 
 
-    public void delete(String id) {
+    /**
+     * Gets the two markers of the saved run
+     *
+     * @param duration The duration of the desired run;\
+     *                 Used as the id for the map data
+     */
+    public ArrayList<LatLng> get_map_data(int duration) {
+
+        open();
+
+        ArrayList<LatLng> theMarkers = new ArrayList<>();
+
+        // Only gets the 4 columns we care about
+        String[] queriedColumns = new String[] {
+                ImpSQLiteOpenHelper.COLUMN_START_LAT,
+                ImpSQLiteOpenHelper.COLUMN_START_LNG,
+                ImpSQLiteOpenHelper.COLUMN_CURRENT_LAT,
+                ImpSQLiteOpenHelper.COLUMN_CURRENT_LNG
+        };
+
+        String columnSelection = ImpSQLiteOpenHelper.COLUMN_GPS_DURATION + "=" + duration;
+
+        // Queries only the row with the matching duration
+        Cursor cursor = database.query(
+                ImpSQLiteOpenHelper.TABLE_GPS,
+                queriedColumns,
+                columnSelection,
+                null,
+                null,
+                null,
+                null
+        );
+
+        if( cursor.moveToFirst() ) {
+
+            int start_lat = cursor.getInt(ImpSQLiteOpenHelper.COLUMN_START_LAT_I);
+            int start_lng = cursor.getInt(ImpSQLiteOpenHelper.COLUMN_START_LNG_I);
+            int current_lat = cursor.getInt(ImpSQLiteOpenHelper.COLUMN_START_LAT_I);
+            int current_lng = cursor.getInt(ImpSQLiteOpenHelper.COLUMN_START_LNG_I);
+
+            theMarkers.add(new LatLng((double)start_lat, (double)start_lng));
+            theMarkers.add(new LatLng((double)current_lat, (double)current_lng));
+        }
+
+        close();
+
+        return theMarkers;
+    }
+
+
+    public void delete(String id, String table) {
 
         open();
 
         String[] whereArgs = new String[] { id };
 
-        database.delete(ImpSQLiteOpenHelper.TABLE_HISTORY, ImpSQLiteOpenHelper.COLUMN_TIME + "=?", whereArgs);
+        if( table == ImpSQLiteOpenHelper.TABLE_HISTORY) {
+            database.delete(ImpSQLiteOpenHelper.TABLE_HISTORY, ImpSQLiteOpenHelper.COLUMN_TIME + "=?", whereArgs);
+        }
+        else if( table == ImpSQLiteOpenHelper.TABLE_GPS) {
 
+            database.delete(ImpSQLiteOpenHelper.TABLE_GPS, ImpSQLiteOpenHelper.COLUMN_GPS_DURATION + "=?", whereArgs);
+            database.delete(ImpSQLiteOpenHelper.TABLE_HISTORY, ImpSQLiteOpenHelper.COLUMN_DURATION + "=?", whereArgs);
+        }
 
         close();
     }

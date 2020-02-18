@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 /**
@@ -72,7 +73,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                 String activity_type = activity_type_spinner.getSelectedItem().toString();
 
 
-                if( input_type == "Manual Entry") {
+                if( input_type.equals("Manual Entry")  ) {
 
                     Intent intent = new Intent(getActivity(), Start.class);
 
@@ -82,8 +83,23 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                     // Starts the "Start" activity with the input-type and the activity-type known
                     startActivity(intent);
                 }
-                else {
+                else if( input_type.equals("GPS")){
 
+                    Intent intent = new Intent(getActivity(), GPSRunActivity.class);
+
+                    intent.putExtra("activity_type", activity_type);
+
+                    intent.putExtra("automatic", false);
+
+                    startActivity(intent);
+                }
+                else if( input_type.equals("Automatic")){
+
+                    Intent intent = new Intent(getActivity(), GPSRunActivity.class);
+
+                    intent.putExtra("automatic", true);
+
+                    startActivity(intent);
                 }
 
                 break;

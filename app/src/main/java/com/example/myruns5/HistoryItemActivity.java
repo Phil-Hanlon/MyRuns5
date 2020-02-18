@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -84,7 +84,7 @@ public class HistoryItemActivity extends AppCompatActivity {
 
         String time = entry_string.split(", ")[1].split(" ")[0];
 
-        historyData.delete(time);
+        historyData.delete(time, ImpSQLiteOpenHelper.TABLE_HISTORY);
 
         finish();
     }

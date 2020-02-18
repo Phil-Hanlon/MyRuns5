@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 
 import android.content.Context;
@@ -67,9 +67,19 @@ public class HistoryFragment extends Fragment {
 
                 TextView textView = (TextView)view;
 
-                Intent intent = new Intent(getActivity(), HistoryItemActivity.class);
+                String entry_string = (String)textView.getText();
 
-                intent.putExtra("entry_string", (textView.getText()));
+                Intent intent;
+                if( entry_string.split(": ")[0].equals("Manual Entry") ) {
+
+                    intent = new Intent(getActivity(), HistoryItemActivity.class);
+                }
+                else {
+
+                    intent = new Intent(getActivity(), GPSHistoryItemActivity.class);
+                }
+
+                intent.putExtra("entry_string", entry_string);
 
                 startActivityForResult(intent, 0);
             }

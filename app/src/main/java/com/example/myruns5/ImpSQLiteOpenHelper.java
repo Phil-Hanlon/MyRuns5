@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +32,21 @@ public class ImpSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final int COLUMN_TIME_I = 8;
 
 
+    public static final String TABLE_GPS = "gps";
+
+    public static final String COLUMN_GPS_DURATION = "gps_duration";
+    public static final int COLUMN_GPS_DURATION_I = 0;
+    public static final String COLUMN_START_LAT = "start_latitude";
+    public static final int COLUMN_START_LAT_I = 1;
+    public static final String COLUMN_START_LNG = "start_longitude";
+    public static final int COLUMN_START_LNG_I = 2;
+    public static final String COLUMN_CURRENT_LAT = "current_latitude";
+    public static final int COLUMN_CURRENT_LAT_I = 3;
+    public static final String COLUMN_CURRENT_LNG = "current_longitude";
+    public static final int COLUMN_CURRENT_LNG_I = 4;
+
+
+
     public ImpSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -52,6 +67,18 @@ public class ImpSQLiteOpenHelper extends SQLiteOpenHelper {
                     + COLUMN_COMMENT + " text, "
                     + COLUMN_DATE + " text, "
                     + COLUMN_TIME + " text"
+                + ");";
+
+        database.execSQL(sql_create_table);
+
+        sql_create_table =
+                "create table "
+                    + TABLE_GPS + "("
+                    + COLUMN_GPS_DURATION + " integer, "
+                    + COLUMN_START_LAT + " integer, "
+                    + COLUMN_START_LNG + " integer, "
+                    + COLUMN_CURRENT_LAT + " integer, "
+                    + COLUMN_CURRENT_LNG + " integer"
                 + ");";
 
         database.execSQL(sql_create_table);

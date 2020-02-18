@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        // Use to refresh database
+        // deleteDatabase(ImpSQLiteOpenHelper.DATABASE_NAME);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);

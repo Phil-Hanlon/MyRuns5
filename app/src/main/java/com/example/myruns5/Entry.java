@@ -1,4 +1,4 @@
-package com.example.myruns4;
+package com.example.myruns5;
 
 public class Entry {
 
@@ -54,6 +54,6 @@ public class Entry {
 
         return  input_type + ": " + activity_type + ", " + time + " " + date + "\n"
                 + "calories burned: " + calories + ", " + "avg. heart rate: " + heart_rate + "\n"
-                + distance + " Miles, " + time + " secs";
+                + distance + " Miles, " + duration + " secs";
     }
 }
